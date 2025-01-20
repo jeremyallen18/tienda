@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refrigerador - MiTienda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .producto {
+      text-align: center;
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .producto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .producto h4, .producto p {
+      margin: 0.5rem 0;
+    }
+    .producto button {
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .producto button:hover {
+      background-color: #0056b3;
+    }
+    .btn-regresar {
+      display: block;
+      margin: 2rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      width: 150px;
+    }
+    .btn-regresar:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Refrigerador</h1>
+  </header>
+
+  <main class="producto">
+    <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\electrodomesticos\refrigerador.png" alt="Refrigerador">
+    <h4>Refrigerador</h4>
+    <p>Precio: $15,000.00</p>
+    <button onclick="agregarAlCarrito('Refrigerador', 15000)">Agregar al carrito</button>
+    <a href="electrodomesticos.html" class="btn-regresar">Regresar</a>
+  </main>
+
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      // Obtener el carrito actual desde localStorage
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      
+      // Agregar el producto al carrito
+      carrito.push({ nombre, precio });
+      
+      // Guardar el carrito actualizado en localStorage
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      
+      // Notificar al usuario
+      alert(`${nombre} ha sido agregado al carrito.`);
+    }
+  </script>
+
+</body>
+</html>
+

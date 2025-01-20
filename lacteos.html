@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lácteos - MiTienda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .productos {
+      padding: 2rem;
+    }
+    .producto {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 1rem 0;
+      text-align: center;
+      padding: 1rem;
+      background-color: #f9f9f9;
+    }
+    .producto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .producto button {
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .producto button:hover {
+      background-color: #0056b3;
+    }
+    .btn-regresar {
+      display: block;
+      margin: 2rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      width: 150px;
+    }
+    .btn-regresar:hover {
+      background-color: #0056b3;
+    }
+    .carrito {
+      margin-top: 2rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .carrito h4 {
+      margin-bottom: 1rem;
+    }
+    .carrito p {
+      margin: 0.5rem 0;
+    }
+    .btn-carrito {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  width: 150px;
+}
+.btn-carrito:hover {
+  background-color: #218838;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Lácteos</h1>
+    <p>Explora nuestra selección de productos lácteos frescos</p>
+  </header>
+
+  <main class="productos">
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\lacteos\leche.jpg" alt="Leche">
+      <h4>Leche</h4>
+      <p>Precio: $20.00/litro</p>
+      <button onclick="agregarAlCarrito('Leche', 20)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\lacteos\yogurt.jpg" alt="Yogurt">
+      <h4>Yogur</h4>
+      <p>Precio: $25.00/500ml</p>
+      <button onclick="agregarAlCarrito('Yogur', 25)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\lacteos\queso.jpg" alt="Queso">
+      <h4>Queso</h4>
+      <p>Precio: $50.00/250g</p>
+      <button onclick="agregarAlCarrito('Queso', 50)">Agregar al carrito</button>
+    </div>
+    <a href="index.html" class="btn-regresar">Regresar</a>
+  </main>
+
+  <section class="carrito">
+    <h4>Carrito en Tiempo Real</h4>
+    <div id="carrito-lista"></div>
+    <p id="carrito-total"></p>
+  </section>
+
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito.push({ nombre, precio });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert(`${nombre} ha sido agregado al carrito.`);
+      mostrarCarrito();
+    }
+
+    function mostrarCarrito() {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const carritoLista = document.getElementById('carrito-lista');
+      const carritoTotal = document.getElementById('carrito-total');
+      carritoLista.innerHTML = '';
+
+      if (carrito.length === 0) {
+        carritoLista.innerHTML = '<p>El carrito está vacío.</p>';
+        carritoTotal.textContent = '';
+        return;
+      }
+
+      let total = 0;
+      carrito.forEach((producto) => {
+        const item = document.createElement('p');
+        item.textContent = `${producto.nombre} - $${producto.precio.toFixed(2)}`;
+        carritoLista.appendChild(item);
+        total += producto.precio;
+      });
+
+      carritoTotal.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', mostrarCarrito);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagar - MiTienda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .contenedor {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .contenedor h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .formulario label {
+      display: block;
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+    .formulario input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .formulario button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .formulario button:hover {
+      background-color: #0056b3;
+    }
+    .btn-regresar {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      width: 150px;
+    }
+    .btn-regresar:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pagar</h1>
+    <p>Completa los datos de tu tarjeta para finalizar tu compra</p>
+  </header>
+
+  <div class="contenedor">
+    <h2>Datos de la Tarjeta</h2>
+    <form class="formulario" id="form-pago">
+      <label for="nombre">Nombre del titular</label>
+      <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+      <label for="numero">Número de tarjeta</label>
+      <input type="text" id="numero" placeholder="1234 5678 9012 3456" required>
+
+      <label for="vencimiento">Fecha de vencimiento</label>
+      <input type="text" id="vencimiento" placeholder="MM/AA" required>
+
+      <label for="cvv">CVV</label>
+      <input type="text" id="cvv" placeholder="123" required>
+
+      <button type="button" onclick="procesarPago()">Pagar</button>
+    </form>
+  </div>
+
+  <a href="carrito.html" class="btn-regresar">Regresar</a>
+
+  <script>
+    function procesarPago() {
+      // Obtener datos del carrito
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      if (carrito.length === 0) {
+        alert('El carrito está vacío. Agrega productos antes de pagar.');
+        return;
+      }
+
+      // Validar campos
+      const nombre = document.getElementById('nombre').value;
+      const numero = document.getElementById('numero').value;
+      const vencimiento = document.getElementById('vencimiento').value;
+      const cvv = document.getElementById('cvv').value;
+
+      if (!nombre || !numero || !vencimiento || !cvv) {
+        alert('Por favor, completa todos los campos.');
+        return;
+      }
+
+      // Generar ticket
+      generarTicket(carrito);
+
+      // Vaciar el carrito
+      localStorage.removeItem('carrito');
+      alert('Pago procesado exitosamente. Gracias por tu compra.');
+      window.location.href = 'index.html';
+    }
+
+    function generarTicket(carrito) {
+      let ticket = '--- Ticket de Compra ---\n\n';
+      let total = 0;
+
+      carrito.forEach((producto, index) => {
+        ticket += `${index + 1}. ${producto.nombre} - $${producto.precio.toFixed(2)}\n`;
+        total += producto.precio;
+      });
+
+      ticket += `\nTotal: $${total.toFixed(2)}\n\nGracias por tu compra.`;
+
+      // Crear archivo y descargar
+      const blob = new Blob([ticket], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ticket.txt';
+      link.click();
+
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>

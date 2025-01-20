@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos de Limpieza - MiTienda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .productos {
+      padding: 2rem;
+    }
+    .producto {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 1rem 0;
+      text-align: center;
+      padding: 1rem;
+      background-color: #f9f9f9;
+    }
+    .producto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .producto button {
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .producto button:hover {
+      background-color: #0056b3;
+    }
+    .btn-regresar, .btn-carrito {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      width: 150px;
+    }
+    .btn-regresar {
+      background-color: #007bff;
+    }
+    .btn-regresar:hover {
+      background-color: #0056b3;
+    }
+    .btn-carrito {
+      background-color: #28a745;
+    }
+    .btn-carrito:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Productos de Limpieza</h1>
+    <p>Encuentra todo lo necesario para mantener tu hogar limpio</p>
+  </header>
+
+  <main class="productos">
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\limpieza\detergente.jpg" alt="Detergente líquido">
+      <h4>Detergente líquido</h4>
+      <p>$50.00/botella de 1L</p>
+      <button onclick="agregarAlCarrito('Detergente líquido', 50)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\limpieza\jabon.jpg" alt="Jabón en polvo">
+      <h4>Jabón en polvo</h4>
+      <p>$40.00/bolsa de 1kg</p>
+      <button onclick="agregarAlCarrito('Jabón en polvo', 40)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\limpieza\multiusos.jpg" alt="Limpiador multiusos">
+      <h4>Limpiador multiusos</h4>
+      <p>$30.00/botella de 500ml</p>
+      <button onclick="agregarAlCarrito('Limpiador multiusos', 30)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\limpieza\cloro.jpg" alt="Cloro">
+      <h4>Cloro</h4>
+      <p>$18.00/botella de 1L</p>
+      <button onclick="agregarAlCarrito('Cloro', 18)">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <img src="C:\Users\jerem\OneDrive\Documentos\Proyecto\imagenes\limpieza\papel.jpg" alt="Papel">
+      <h4>Papel</h4>
+      <p>$25.00/rollo</p>
+      <button onclick="agregarAlCarrito('Papel', 25)">Agregar al carrito</button>
+    </div>
+    <a href="carrito.html" class="btn-carrito">Ver Carrito</a>
+    <a href="index.html" class="btn-regresar">Regresar</a>
+  </main>
+
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      // Obtener el carrito actual desde localStorage
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      // Agregar el producto al carrito
+      carrito.push({ nombre, precio });
+
+      // Guardar el carrito actualizado en localStorage
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+
+      // Confirmación al usuario
+      alert(`${nombre} ha sido agregado al carrito.`);
+    }
+  </script>
+
+</body>
+</html>
